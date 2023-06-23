@@ -1,19 +1,30 @@
+DROP DATABASE gamesdb;
+
 CREATE DATABASE IF NOT EXISTS gamesdb;
 USE gamesdb;
 
-DROP TABLE IF EXISTS customers;
-
-CREATE TABLE IF NOT EXISTS customers (
-id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE customers (
+cust_id INT PRIMARY KEY AUTO_INCREMENT,
 first_name VARCHAR(20) NOT NULL,
 last_name VARCHAR(20),
-age INT NOT NULL
+age INT NOT NULL,
+postcode VARCHAR(10) NOT NULL,
+dob DATE NOT NULL
 );
 
-DROP TABLE IF EXISTS orders;
+CREATE TABLE items (
+item_id INT PRIMARY KEY,
+item_desc VARCHAR(30),
+rrp FLOAT,
+buy_price FLOAT
+);
 
-CREATE TABLE IF NOT EXISTS orders (
-id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE orders (
 cust_id INT NOT NULL,
-FOREIGN KEY (cust_id) REFERENCES customers(id)
+order_id INT PRIMARY KEY AUTO_INCREMENT,
+item_id INT NOT NULL,
+qty INT NOT NULL,
+d_o_purchase DATE,
+FOREIGN KEY (item_id) REFERENCES items(item_id),
+FOREIGN KEY (cust_id) REFERENCES customers(cust_id)
 );
